@@ -7,7 +7,7 @@ uses
   System.UITypes,
   {$ENDIF}
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, uMySFTPClient,
+  Dialogs, uMySFTPClient, libssh2,
   StdCtrls, ComCtrls, ExtCtrls, CheckLst;
 
 type
@@ -69,6 +69,8 @@ type
   public
     { Public declarations }
   end;
+
+function libssh2_init; external libssh2_name{$ifdef allow_delayed} delayed{$endif};
 
 var
   Form3: TForm3;
@@ -441,6 +443,9 @@ end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 begin
+  {$IFDEF   allow_delayed}
+     ShowMessage('aaa');
+  {$ENDIF}
   //
   SFTP := TSFTPClient.Create(Self);
   SFTP.OnTransferProgress := OnProgress;
